@@ -39,3 +39,9 @@
 - 与当前 BSP 音频路径匹配时优先采用 16 kHz、16 位单声道 PCM。
 - 嵌入音频前评估 Flash 与内部 RAM 成本；长录音应流式或分块。
 - 无再分发许可不提交媒体文件。
+
+## 响指跃行字体
+
+`fonts/NotoSansSC.ttf` 来自 [Google Fonts 的 Noto Sans SC 源文件](https://github.com/google/fonts/tree/main/ofl/notosanssc)，使用 SIL Open Font License 1.1，许可保存在 `fonts/OFL.txt`。保留原文件用于重现，不整份嵌入固件。`fonts/snap_font_16.c`、`fonts/snap_font_22.c` 为 16/22 px、Medium（字重 500）、4 bpp、未压缩、无字偶距子集，由 `main/CMakeLists.txt` 编译。两个字号覆盖相同固定文字及 ASCII。`fonts/snap_fonts.json` 记录原文件／产物哈希及转换器版本。
+
+使用 `python3 tools/snap_fonts.py` 重新生成（需要 fontTools 和 Node/npx，固定 lv_font_conv 1.5.3），再执行 `python3 tools/snap_fonts.py --check`。`main/snap_glyphs.h` 为生成的字符清单；启动及桌面渲染程序检查两个字号的实际 LVGL 字形描述符。设备真实显示仍需单独验收。原创像素精灵和场景在 `main/snap_ui.c` 中绘制，没有使用外部精灵素材。

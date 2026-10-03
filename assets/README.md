@@ -41,3 +41,9 @@ Store reusable music and sound-effect sources in `music/`.
 - Prefer 16 kHz, 16-bit mono PCM when it matches the current BSP audio path.
 - Check Flash and internal-RAM cost before embedding audio; stream or chunk long recordings.
 - Do not commit media without redistribution permission.
+
+## Snap Runner fonts
+
+`fonts/NotoSansSC.ttf` comes from the [Google Fonts Noto Sans SC source](https://github.com/google/fonts/tree/main/ofl/notosanssc), under the SIL Open Font License 1.1 retained in `fonts/OFL.txt`. It is retained as the reproducible source, not embedded wholesale. `fonts/snap_font_16.c` and `fonts/snap_font_22.c` are 16/22 px, Medium (weight 500), 4 bpp, uncompressed subsets with no kerning, compiled by `main/CMakeLists.txt`. Both UI font sizes cover the same fixed text and ASCII inventory. `fonts/snap_fonts.json` records source/output hashes and converter version.
+
+Regenerate with `python3 tools/snap_fonts.py` (requires fontTools and Node/npx; pins lv_font_conv 1.5.3), then run `python3 tools/snap_fonts.py --check`. `main/snap_glyphs.h` is the generated inventory; boot and the desktop rendering harness verify real LVGL glyph descriptors in both sizes. Actual device rendering remains a separate acceptance check. The original pixel creature and landscape are drawn in `main/snap_ui.c`; no external sprite assets are used.
