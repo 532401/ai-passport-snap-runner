@@ -1,0 +1,23 @@
+Snap Runner
+Copyright 2026 Snap Runner contributors
+
+Original additions and modifications made for Snap Runner are licensed under
+Apache License 2.0; see LICENSE. This includes the snap game model, detector,
+session and UI, application integration, tests, tools and project documentation,
+except third-party material identified below. This notice does not change the
+licenses of upstream code or third-party dependencies.
+
+This project is derived from FoloToy AI Passport:
+https://gitee.com/FoloToy/ai-passport
+Baseline commit: 0b9e4c81ee4421c0bac39ca3561d65a8285acd4a
+Copyright (c) 2026 FoloToy
+The inherited AI Passport code and other upstream material remain under MIT.
+The original copyright and complete permission notice are preserved in
+LICENSES/AI-Passport-MIT.txt, including for inherited portions of modified files.
+
+Noto Sans SC and its generated font subsets remain under SIL Open Font License
+1.1. See assets/fonts/OFL.txt and assets/README.md for copyright, license and
+source details. The Apache license does not replace the font license.
+
+ESP-IDF and managed components retain their respective licenses and notices
+provided with those dependencies. This project's license does not replace them.

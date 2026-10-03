@@ -84,8 +84,12 @@ scope and compatibility.
 
 ## Licensing of contributions
 
-This repository is licensed under [MIT](/LICENSE). By contributing, you agree that
-your contribution is submitted under the MIT license terms of the repository.
+Original contributions to this Snap Runner fork are submitted under
+[Apache License 2.0](/LICENSE), unless explicitly agreed otherwise. Inherited
+AI Passport code remains under [MIT](/LICENSES/AI-Passport-MIT.txt); fonts and
+other third-party components retain their own licenses. Preserve their copyright
+and license notices. See [NOTICE](/NOTICE) for scope and attribution. Contributions
+to the separate upstream FoloToy repository follow that repository's terms.
 
 ## Security issues
 

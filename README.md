@@ -75,6 +75,15 @@ are kept out of Git. The game is developed on `feature/custom-passport-app`;
 
 ## License and credits
 
-Code follows the upstream [MIT license](LICENSE). Noto Sans SC is distributed
-under the [SIL Open Font License](assets/fonts/OFL.txt); generated font subsets
-and source provenance are documented in [assets](assets/README.md).
+Snap Runner's original additions and modifications use [Apache License 2.0](LICENSE).
+Inherited AI Passport code retains its [MIT license](LICENSES/AI-Passport-MIT.txt)
+and FoloToy attribution. See [NOTICE](NOTICE) for the scope and upstream provenance.
+Noto Sans SC and generated font subsets retain the
+[SIL Open Font License](assets/fonts/OFL.txt); source provenance is documented in
+[assets](assets/README.md). ESP-IDF and managed dependencies keep their own licenses.
+
+Apache-2.0 permits commercial use, modification and redistribution, including in
+closed-source products, subject to its license and notice requirements. It
+includes an express contributor patent grant and does not require downstream
+modifications to be published. See the [official license](https://www.apache.org/licenses/LICENSE-2.0)
+for the complete terms.

@@ -65,5 +65,12 @@ cd ai-passport-snap-runner
 
 ## 许可与来源
 
-代码遵循上游 [MIT 许可](LICENSE)。Noto Sans SC 使用
-[SIL Open Font License](assets/fonts/OFL.txt)，字体子集及来源说明见[资源文档](assets/README.zh_CN.md)。
+响指跃行的原创新增内容及修改采用 [Apache License 2.0](LICENSE)。
+继承的 AI Passport 代码保留 [MIT 许可](LICENSES/AI-Passport-MIT.txt)和 FoloToy 署名；
+适用范围及上游来源见 [NOTICE](NOTICE)。Noto Sans SC 及生成的字体子集继续使用
+[SIL Open Font License](assets/fonts/OFL.txt)，来源见[资源文档](assets/README.zh_CN.md)。
+ESP-IDF 和托管依赖保留各自许可证。
+
+Apache-2.0 允许商用、修改和再分发（包括用于闭源产品），需遵守许可证及声明保留要求。
+它包含贡献者明确的专利授权，不要求下游公开修改后的代码。
+完整条款以[官方许可证](https://www.apache.org/licenses/LICENSE-2.0)为准。

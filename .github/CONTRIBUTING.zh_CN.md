@@ -70,7 +70,10 @@ cc -std=c11 -Wall -Wextra -Werror -Imain \
 
 ## 贡献的许可
 
-本仓库使用 [MIT](/LICENSE) 许可证。提交贡献即表示你同意按本仓库的 MIT 条款并入你的贡献。
+除非明确另有约定，向此响指跃行派生仓库提交的原创贡献采用 [Apache License 2.0](/LICENSE)。
+继承的 AI Passport 代码保留 [MIT](/LICENSES/AI-Passport-MIT.txt)，字体和其他第三方组件
+保留各自许可证；应保留其版权和许可声明。适用范围及署名见 [NOTICE](/NOTICE)。
+向独立的 FoloToy 上游仓库提交贡献时，遵循该仓库自己的许可条款。
 
 ## 安全漏洞
 
