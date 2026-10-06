@@ -1,4 +1,5 @@
 #include "snap_ui.h"
+#include "snap_chart.h"
 
 #include <math.h>
 #include <stdio.h>
@@ -120,6 +121,18 @@ static void draw(lv_event_t *event) {
                    oy + ground - (run ? (int)game->y : 0),
                    (unsigned)(game->distance / 9), !game->grounded && run);
         }
+        if (page == SNAP_PLAYING || page == SNAP_PAUSED) {
+            const int progress = (int)(120ULL * game->song_ms / snap_chart_duration_ms());
+            rect(layer, ox + 100, oy + 86, 120, 4, 0x334457);
+            rect(layer, ox + 100, oy + 86, progress, 4, MINT);
+            const int cue = snap_game_cue_in_ms(game);
+            if (cue < 800 && cue >= -150) {
+                const int spread = cue > 0 ? 6 + cue / 40 : 6;
+                const uint32_t color = cue > 100 ? PAPER : CORAL;
+                rect(layer, ox + 58 - spread, oy + ground - 3, 3, 8, color);
+                rect(layer, ox + 58 + spread, oy + ground - 3, 3, 8, color);
+            }
+        }
         if (active) {
             for (unsigned i = 0; i < 3; i++)
                 heart(layer, ox + 20 + (int)i * 22, oy + 82,
@@ -218,8 +231,8 @@ void snap_ui_update(const snap_session_t *session, const snap_ui_status_t *statu
     const unsigned score = snap_game_score(&session->game);
     switch (session->page) {
     case SNAP_HOME:
-        snprintf(title, sizeof(title), "响指跃行");
-        snprintf(body, sizeof(body), "一声响指，一次飞跃\n最高纪录 %u 米", session->high_score);
+        snprintf(title, sizeof(title), "山妖洞穴");
+        snprintf(body, sizeof(body), "跟随重拍，响指起跳\n最高纪录 %u 米", session->high_score);
         snprintf(info, sizeof(info), "%s", snap_range_valid(session->range) ? "校准已就绪" : "先认识你的响指");
         snprintf(footer, sizeof(footer), "%s", snap_range_valid(session->range) ?
                  "确定 开跑  /  上键 练习\n下键 重新校准" : "确定 开始校准");
@@ -253,20 +266,19 @@ void snap_ui_update(const snap_session_t *session, const snap_ui_status_t *statu
         break;
     case SNAP_PLAYING:
         snprintf(title, sizeof(title), "%06u 米", score);
-        snprintf(info, sizeof(info), "力度 %02u / 10%s", session->level,
-                 session->hint == SNAP_HINT_AIR && status->now_ms < session->feedback_until_ms ? "  等待落地" : "");
-        snprintf(footer, sizeof(footer), "响指 跳跃  /  确定 暂停");
+        snprintf(info, sizeof(info), "力度 %02u  音量 %u", session->level, session->volume);
+        snprintf(footer, sizeof(footer), "重拍起跳  确定暂停\n上 / 下键 调音量");
         break;
     case SNAP_PAUSED:
         snprintf(title, sizeof(title), "暂停 / %u 米", score);
         snprintf(body, sizeof(body), "准备好了再继续");
-        snprintf(info, sizeof(info), "地图和分数已暂停");
+        snprintf(info, sizeof(info), status->music_fault ? "音频中断，确定重试" : "音乐和地图已暂停");
         snprintf(footer, sizeof(footer), "确定 继续  /  下键 返回");
         break;
     case SNAP_OVER:
-        snprintf(title, sizeof(title), "跑了 %u 米", score);
+        snprintf(title, sizeof(title), session->game.complete ? "通关！ %u 米" : "跑了 %u 米", score);
         snprintf(body, sizeof(body), "最高纪录 %u 米", session->high_score);
-        snprintf(info, sizeof(info), "下一次，再远一点");
+        snprintf(info, sizeof(info), "%s", session->game.complete ? "整首完成，休息一下" : "下一次，再远一点");
         snprintf(footer, sizeof(footer), "确定 重来  /  上键 返回\n下键 重新校准");
         break;
     }

@@ -1,15 +1,16 @@
 [简体中文](README.zh_CN.md) · **English**
 
-# Snap Runner
+# Snap Runner: Mountain King
 
 An offline finger-snap runner for **FoloToy AI Passport**. A pixel creature runs
 through a scrolling night landscape; snap your fingers to jump over rocks and
-pits. The microphone measures snap strength and maps it to ten jump heights.
+pits to *In the Hall of the Mountain King*. The microphone measures snap strength
+and maps it to ten jump heights. Jump cues follow selected musical accents.
 
 Built on the [official AI Passport project](https://gitee.com/FoloToy/ai-passport),
 reusing its BSP with an application-specific Chinese interface. Target hardware:
 ESP32-C3, 8 MB Flash, no PSRAM, and a 240 × 320 display. No network connection or
-speaker playback is required.
+online setup is required; music is included in the firmware.
 
 ## Play
 
@@ -23,18 +24,19 @@ snaps jump higher; jumps cannot be chained in mid-air. Three collisions end a
 run. Distance is the score; calibration and the highest completed-run score are
 saved locally.
 
-Hazards become denser over the first 1,000 game metres, then density caps.
-Spacing always preserves a complete maximum-height jump plus 350 ms at maximum
-speed, providing a feasible strong-jump route. Weak or mistimed jumps can still
-cause damage. Detection uses a transient heuristic: claps and taps can also
-trigger jumps.
+The fixed course has 39 jump cues over a 154-second recording, including the
+finale's isolated accents. Cues are at least 2.5 seconds apart; you do not need
+to snap on every beat. Finish the music to clear the course. Weak or mistimed
+jumps can still cause damage. Detection uses a transient heuristic: claps and
+taps can also trigger jumps. Upgrading from the random-course version requires
+new calibration and starts a separate music-course score record.
 
 | Screen | UP | DOWN | OK |
 | --- | --- | --- | --- |
 | Calibrated home | Practice | Recalibrate | Start |
 | Calibration | Cancel | No action | Confirm between stages |
 | Practice / game over | Home | Recalibrate | New run |
-| Running | No action | No action | Pause |
+| Running | Volume up | Volume down | Pause |
 | Paused | No action | Home | Resume |
 
 See the [application guide](docs/apps/snap-runner.md) for calibration validation,
@@ -61,17 +63,18 @@ calibration and records. Follow the [flashing policy](docs/development/engineeri
 ## Validation status
 
 - Build: PASS — ESP-IDF 5.5.3 and merged-image verification.
-- Host tests: PASS — calibration, detection, physics, session flow, 120 seeded
-  map streams and 144 minimum-gap combinations, plus sanitizers and font checks.
-- Device tests: PASS only for flashing and a 45-second startup-log window of
-  the density version; no watchdog or crash diagnostics were observed.
-- Unverified: human-snap accuracy, real display/control acceptance, long runs,
-  progression feel, persistence across power loss, and sleep/current behavior.
+- Host tests: PASS — calibration, detection, physics, fixed-chart timing margins,
+  audio transport, music leakage fixtures, simulator tooling and font checks.
+- Device tests: PASS for flashing, startup and user-confirmed audible gameplay;
+  captured playback reached 86.1 seconds with no reported audio I/O failures.
+- Unverified: full-song listening, perceived beat alignment, acoustic false
+  triggers, long-term stability, power-loss persistence and sleep/current behavior.
 
 Exact tested firmware identities and evidence are in the
 [application guide](docs/apps/snap-runner.md). Build outputs and raw device logs
-are kept out of Git. The game is developed on `feature/custom-passport-app`;
-`main` retains the upstream baseline.
+are kept out of Git. The release source is on `feature/custom-passport-app`;
+music-course development uses `Kenwood/snap-downbeat-chart`. `main` retains the
+upstream baseline.
 
 ## License and credits
 
@@ -81,6 +84,8 @@ and FoloToy attribution. See [NOTICE](NOTICE) for the scope and upstream provena
 Noto Sans SC and generated font subsets retain the
 [SIL Open Font License](assets/fonts/OFL.txt); source provenance is documented in
 [assets](assets/README.md). ESP-IDF and managed dependencies keep their own licenses.
+The music uses a Musopen public-domain recording; attribution and conversion
+details are in the same asset guide.
 
 Apache-2.0 permits commercial use, modification and redistribution, including in
 closed-source products, subject to its license and notice requirements. It

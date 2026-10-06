@@ -38,6 +38,10 @@ typedef struct {
 typedef struct {
     snap_hazard_t hazards[SNAP_HAZARD_COUNT];
     uint32_t random;
+    uint32_t song_ms;
+    uint32_t hazard_cue_ms[SNAP_HAZARD_COUNT];
+    unsigned next_event;
+    bool complete;
     float distance;
     float speed;
     float y;
@@ -55,6 +59,7 @@ void snap_game_start(snap_game_t *game, uint32_t seed, bool practice);
 bool snap_game_jump(snap_game_t *game, unsigned level);
 /* Fixed-step simulation: each call is 10 ms; no wall-clock or platform access. */
 void snap_game_step(snap_game_t *game);
+int snap_game_cue_in_ms(const snap_game_t *game);
 unsigned snap_game_score(const snap_game_t *game);
 /* Controller pacing never catches up by spinning after a missed deadline. */
 unsigned snap_loop_delay_ms(uint64_t work_ms);

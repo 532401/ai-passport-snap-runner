@@ -1,0 +1,51 @@
+{
+  "title": "In the Hall of the Mountain King / 在山魔王的宫殿里",
+  "composer": "Edvard Grieg",
+  "performer": "Czech National Symphony Orchestra, credited as Musopen Symphony Orchestra",
+  "recording_year": 2012,
+  "source_page": "https://commons.wikimedia.org/wiki/File:Grieg_-_Peer_Gynt_Suite_No._1,_Op._46_-_IV._In_the_Hall_of_the_Mountain_King_(Musopen_Symphony).flac",
+  "source_revision": "https://commons.wikimedia.org/w/index.php?title=File:Grieg_-_Peer_Gynt_Suite_No._1,_Op._46_-_IV._In_the_Hall_of_the_Mountain_King_(Musopen_Symphony).flac&oldid=963508981",
+  "download_url": "https://upload.wikimedia.org/wikipedia/commons/8/84/Grieg_-_Peer_Gynt_Suite_No._1%2C_Op._46_-_IV._In_the_Hall_of_the_Mountain_King_%28Musopen_Symphony%29.flac",
+  "recording_rights": "Released into the public domain worldwide by Musopen; Commons recording licensing section includes fallback permission for any purpose without conditions except those required by law.",
+  "composition_rights": "Public domain; composer died in 1907.",
+  "retrieved_at_utc": "2026-10-05T17:15:18.383745+00:00",
+  "original_sha1": "7d34c97620149eff83bc14a1e838ef5d8e66746b",
+  "original_bytes": 25778747,
+  "mp3_sha256": "b88cf7a3184ed34ed8038a4a70f87f15d05738cfaca8eb56593259767a6a13c7",
+  "mp3_file": "mountain-king-musopen-96k-mono.mp3",
+  "conversion": "FLAC to 96 kbps MP3, mono, 44.1 kHz; no edits to duration or tempo",
+  "validation": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_name": "mp3",
+        "sample_rate": "44100",
+        "channels": 1,
+        "bit_rate": "96000"
+      }
+    ],
+    "format": {
+      "duration": "154.091043",
+      "size": "1850123"
+    }
+  },
+  "full_decode": "PASS",
+  "speaker_mastering": {
+    "reference_pcm_sha256": "b195064b644b5dee711977fe0f3028b2c53de4f771591287578c016c0b9080b9",
+    "pcm_sha256": "540ed1b6016337f4d5b6cbdf70b0d9b93ff8e35dfa8a3e945794c4c709867f9b",
+    "samples": 2465456,
+    "sample_rate": 16000,
+    "filter": "dynaudnorm=f=500:g=31:p=0.73:m=16:r=0.12:c=0:b=1",
+    "method": "Offline smooth gain normalization only; no EQ, resampling, trim or time stretch. Existing 1.5 kHz low-pass retained. DC correction disabled.",
+    "validation": {
+      "same_sample_count": true,
+      "sign_reversals": 0,
+      "peak": 18765,
+      "clipped_samples": 0,
+      "opening_4_30s_rms": 2484,
+      "opening_gain_db": 16.3
+    },
+    "tool": "FFmpeg 8.1.1"
+  }
+}

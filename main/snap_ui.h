@@ -4,6 +4,7 @@
 #include "lvgl.h"
 
 typedef struct {
+    bool music_fault;
     bool mic_ok;
     bool mic_warming;
     bool storage_ok;

@@ -42,5 +42,19 @@ esp_err_t bsp_audio_wake(void);
 esp_err_t bsp_audio_write(const void *pcm, size_t bytes);
 esp_err_t bsp_audio_read(void *pcm, size_t bytes);
 
+// Discard queued capture samples without waiting for new audio. Call only from
+// the exclusive PCM owner, serialized with read/format/sleep/wake operations.
+// Useful after blocking output priming so input latency does not retain a backlog.
+esp_err_t bsp_audio_discard_input(void);
+
 // 输出音量 0..100(%)。
 void bsp_audio_set_volume(uint8_t percent);
+
+typedef struct {
+    uint8_t clock, dac_interface, power, dac_power, mute, volume, route;
+} bsp_audio_output_status_t;
+
+// Read the actual ES8311 output registers (not cached codec-dev settings).
+// Call from the exclusive audio owner, serialized with format/sleep/wake.
+// On failure the caller's output is unchanged; this does not prove sound output.
+esp_err_t bsp_audio_get_output_status(bsp_audio_output_status_t *status);

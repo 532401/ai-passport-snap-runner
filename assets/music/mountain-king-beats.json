@@ -1,0 +1,2207 @@
+{
+  "schema": 1,
+  "pcm_sha256": "540ed1b6016337f4d5b6cbdf70b0d9b93ff8e35dfa8a3e945794c4c709867f9b",
+  "meter": [
+    4,
+    4
+  ],
+  "source_sha1": "7d34c97620149eff83bc14a1e838ef5d8e66746b",
+  "analysis": {
+    "tool": "CPJKU Beat This! 1.1.0",
+    "url": "https://github.com/CPJKU/beat_this",
+    "models": [
+      {
+        "name": "final0",
+        "sha256": "8c328b45f59d8dd3dff219253ff6a8d6482be57d0133a29140e2febbf8eb8331"
+      },
+      {
+        "name": "final1",
+        "sha256": "365b553f43750717c907f32fbc42910f3b264d616654583df6e44472c93ead80"
+      }
+    ],
+    "runtime": "PyTorch 2.8.0 CPU, NumPy 1.26.4; local Python 3.9 compatibility: postponed type annotations only",
+    "method": "Median of two model beat estimates; 4/4 phase anchored at the first B theme note (4.380 s), score bar 2. Model downbeat labels are rejected when inconsistent with counted 4/4 meter. From 119.130 s the models track half-time; missing quarter beats use adjacent-anchor midpoints, not a constant-BPM grid.",
+    "score_url": "https://www.mutopiaproject.org/ftp/GriegE/O46/Dans_l_antre_du_roi_de_la_montagne/Dans_l_antre_du_roi_de_la_montagne.ly",
+    "score_sha256": "5ce52c65f3a019062baa72d8c85313274d2542dbf68a759d8712df4bea827b95",
+    "score_check": "Opening F-sharp fermata; first B theme at bar 2; Piu vivo at bar 50 / 101.980 s; coda begins with quarter rests at bar 74 / approximately 134 s.",
+    "limitations": "Automatic musical estimates checked against score structure, not expert listening annotations. 20 ms model resolution; interpolated fast-section quarter beats have lower confidence. Actual speaker/display/input latency still requires device measurement. Coda attacks are independently localized acoustic accents, not reliable metric downbeats; audition remains required.",
+    "accepted_anchor_count": 268,
+    "max_model_disagreement_ms": 20,
+    "reference_pcm_sha256": "b195064b644b5dee711977fe0f3028b2c53de4f771591287578c016c0b9080b9"
+  },
+  "excluded_regions": [
+    {
+      "start_ms": 0,
+      "end_ms": 4380,
+      "reason": "Opening fermata: no regular takeoff cue"
+    }
+  ],
+  "sections": [
+    {
+      "start_ms": 4380,
+      "end_ms": 58060,
+      "first_bar": 2,
+      "last_bar": 25,
+      "label_en": "Opening theme",
+      "label_zh": "开头主题",
+      "bpm_min": 102.6,
+      "bpm_max": 110.1,
+      "bpm_median": 107.6
+    },
+    {
+      "start_ms": 58060,
+      "end_ms": 89260,
+      "first_bar": 26,
+      "last_bar": 41,
+      "label_en": "Gradual acceleration",
+      "label_zh": "逐渐加速",
+      "bpm_min": 112.1,
+      "bpm_max": 136.4,
+      "bpm_median": 122.5
+    },
+    {
+      "start_ms": 89260,
+      "end_ms": 101980,
+      "first_bar": 42,
+      "last_bar": 49,
+      "label_en": "Acceleration into climax",
+      "label_zh": "进入高潮",
+      "bpm_min": 142.9,
+      "bpm_max": 160.0,
+      "bpm_median": 151.0
+    },
+    {
+      "start_ms": 101980,
+      "end_ms": 118800,
+      "first_bar": 50,
+      "last_bar": 61,
+      "label_en": "Piu vivo",
+      "label_zh": "快速段",
+      "bpm_min": 160.0,
+      "bpm_max": 179.1,
+      "bpm_median": 172.7
+    },
+    {
+      "start_ms": 118800,
+      "end_ms": 134000,
+      "first_bar": 62,
+      "last_bar": 73,
+      "label_en": "Final regular phrase",
+      "label_zh": "末段加速",
+      "bpm_min": 180.5,
+      "bpm_max": 201.7,
+      "bpm_median": 188.2
+    }
+  ],
+  "beats": [
+    {
+      "time_ms": 4380,
+      "method": "two-model beat consensus",
+      "bar": 2,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 5000,
+      "method": "two-model beat consensus",
+      "bar": 2,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 5560,
+      "method": "two-model beat consensus",
+      "bar": 2,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 6150,
+      "method": "two-model beat consensus",
+      "bar": 2,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 6720,
+      "method": "two-model beat consensus",
+      "bar": 3,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 7280,
+      "method": "two-model beat consensus",
+      "bar": 3,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 7860,
+      "method": "two-model beat consensus",
+      "bar": 3,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 8440,
+      "method": "two-model beat consensus",
+      "bar": 3,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 9000,
+      "method": "two-model beat consensus",
+      "bar": 4,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 9570,
+      "method": "two-model beat consensus",
+      "bar": 4,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 10130,
+      "method": "two-model beat consensus",
+      "bar": 4,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 10690,
+      "method": "two-model beat consensus",
+      "bar": 4,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 11240,
+      "method": "two-model beat consensus",
+      "bar": 5,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 11800,
+      "method": "two-model beat consensus",
+      "bar": 5,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 12350,
+      "method": "two-model beat consensus",
+      "bar": 5,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 12920,
+      "method": "two-model beat consensus",
+      "bar": 5,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 13480,
+      "method": "two-model beat consensus",
+      "bar": 6,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 14040,
+      "method": "two-model beat consensus",
+      "bar": 6,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 14580,
+      "method": "two-model beat consensus",
+      "bar": 6,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 15160,
+      "method": "two-model beat consensus",
+      "bar": 6,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 15700,
+      "method": "two-model beat consensus",
+      "bar": 7,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 16270,
+      "method": "two-model beat consensus",
+      "bar": 7,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 16820,
+      "method": "two-model beat consensus",
+      "bar": 7,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 17380,
+      "method": "two-model beat consensus",
+      "bar": 7,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 17920,
+      "method": "two-model beat consensus",
+      "bar": 8,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 18480,
+      "method": "two-model beat consensus",
+      "bar": 8,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 19020,
+      "method": "two-model beat consensus",
+      "bar": 8,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 19560,
+      "method": "two-model beat consensus",
+      "bar": 8,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 20100,
+      "method": "two-model beat consensus",
+      "bar": 9,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 20660,
+      "method": "two-model beat consensus",
+      "bar": 9,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 21220,
+      "method": "two-model beat consensus",
+      "bar": 9,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 21780,
+      "method": "two-model beat consensus",
+      "bar": 9,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 22340,
+      "method": "two-model beat consensus",
+      "bar": 10,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 22900,
+      "method": "two-model beat consensus",
+      "bar": 10,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 23440,
+      "method": "two-model beat consensus",
+      "bar": 10,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 24000,
+      "method": "two-model beat consensus",
+      "bar": 10,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 24560,
+      "method": "two-model beat consensus",
+      "bar": 11,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 25120,
+      "method": "two-model beat consensus",
+      "bar": 11,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 25660,
+      "method": "two-model beat consensus",
+      "bar": 11,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 26220,
+      "method": "two-model beat consensus",
+      "bar": 11,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 26780,
+      "method": "two-model beat consensus",
+      "bar": 12,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 27320,
+      "method": "two-model beat consensus",
+      "bar": 12,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 27870,
+      "method": "two-model beat consensus",
+      "bar": 12,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 28420,
+      "method": "two-model beat consensus",
+      "bar": 12,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 28960,
+      "method": "two-model beat consensus",
+      "bar": 13,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 29520,
+      "method": "two-model beat consensus",
+      "bar": 13,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 30050,
+      "method": "two-model beat consensus",
+      "bar": 13,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 30640,
+      "method": "two-model beat consensus",
+      "bar": 13,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 31220,
+      "method": "two-model beat consensus",
+      "bar": 14,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 31760,
+      "method": "two-model beat consensus",
+      "bar": 14,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 32320,
+      "method": "two-model beat consensus",
+      "bar": 14,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 32880,
+      "method": "two-model beat consensus",
+      "bar": 14,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 33430,
+      "method": "two-model beat consensus",
+      "bar": 15,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 34000,
+      "method": "two-model beat consensus",
+      "bar": 15,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 34560,
+      "method": "two-model beat consensus",
+      "bar": 15,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 35130,
+      "method": "two-model beat consensus",
+      "bar": 15,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 35690,
+      "method": "two-model beat consensus",
+      "bar": 16,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 36240,
+      "method": "two-model beat consensus",
+      "bar": 16,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 36790,
+      "method": "two-model beat consensus",
+      "bar": 16,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 37350,
+      "method": "two-model beat consensus",
+      "bar": 16,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 37900,
+      "method": "two-model beat consensus",
+      "bar": 17,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 38460,
+      "method": "two-model beat consensus",
+      "bar": 17,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 39040,
+      "method": "two-model beat consensus",
+      "bar": 17,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 39620,
+      "method": "two-model beat consensus",
+      "bar": 17,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 40200,
+      "method": "two-model beat consensus",
+      "bar": 18,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 40780,
+      "method": "two-model beat consensus",
+      "bar": 18,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 41340,
+      "method": "two-model beat consensus",
+      "bar": 18,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 41900,
+      "method": "two-model beat consensus",
+      "bar": 18,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 42460,
+      "method": "two-model beat consensus",
+      "bar": 19,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 43030,
+      "method": "two-model beat consensus",
+      "bar": 19,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 43580,
+      "method": "two-model beat consensus",
+      "bar": 19,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 44140,
+      "method": "two-model beat consensus",
+      "bar": 19,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 44700,
+      "method": "two-model beat consensus",
+      "bar": 20,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 45260,
+      "method": "two-model beat consensus",
+      "bar": 20,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 45800,
+      "method": "two-model beat consensus",
+      "bar": 20,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 46360,
+      "method": "two-model beat consensus",
+      "bar": 20,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 46920,
+      "method": "two-model beat consensus",
+      "bar": 21,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 47480,
+      "method": "two-model beat consensus",
+      "bar": 21,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 48030,
+      "method": "two-model beat consensus",
+      "bar": 21,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 48610,
+      "method": "two-model beat consensus",
+      "bar": 21,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 49170,
+      "method": "two-model beat consensus",
+      "bar": 22,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 49730,
+      "method": "two-model beat consensus",
+      "bar": 22,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 50280,
+      "method": "two-model beat consensus",
+      "bar": 22,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 50840,
+      "method": "two-model beat consensus",
+      "bar": 22,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 51390,
+      "method": "two-model beat consensus",
+      "bar": 23,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 51960,
+      "method": "two-model beat consensus",
+      "bar": 23,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 52520,
+      "method": "two-model beat consensus",
+      "bar": 23,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 53080,
+      "method": "two-model beat consensus",
+      "bar": 23,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 53640,
+      "method": "two-model beat consensus",
+      "bar": 24,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 54200,
+      "method": "two-model beat consensus",
+      "bar": 24,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 54750,
+      "method": "two-model beat consensus",
+      "bar": 24,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 55300,
+      "method": "two-model beat consensus",
+      "bar": 24,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 55840,
+      "method": "two-model beat consensus",
+      "bar": 25,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 56390,
+      "method": "two-model beat consensus",
+      "bar": 25,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 56960,
+      "method": "two-model beat consensus",
+      "bar": 25,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 57520,
+      "method": "two-model beat consensus",
+      "bar": 25,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 58060,
+      "method": "two-model beat consensus",
+      "bar": 26,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 58600,
+      "method": "two-model beat consensus",
+      "bar": 26,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 59140,
+      "method": "two-model beat consensus",
+      "bar": 26,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 59670,
+      "method": "two-model beat consensus",
+      "bar": 26,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 60200,
+      "method": "two-model beat consensus",
+      "bar": 27,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 60720,
+      "method": "two-model beat consensus",
+      "bar": 27,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 61240,
+      "method": "two-model beat consensus",
+      "bar": 27,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 61780,
+      "method": "two-model beat consensus",
+      "bar": 27,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 62300,
+      "method": "two-model beat consensus",
+      "bar": 28,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 62820,
+      "method": "two-model beat consensus",
+      "bar": 28,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 63350,
+      "method": "two-model beat consensus",
+      "bar": 28,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 63870,
+      "method": "two-model beat consensus",
+      "bar": 28,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 64380,
+      "method": "two-model beat consensus",
+      "bar": 29,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 64900,
+      "method": "two-model beat consensus",
+      "bar": 29,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 65420,
+      "method": "two-model beat consensus",
+      "bar": 29,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 65940,
+      "method": "two-model beat consensus",
+      "bar": 29,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 66450,
+      "method": "two-model beat consensus",
+      "bar": 30,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 66960,
+      "method": "two-model beat consensus",
+      "bar": 30,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 67460,
+      "method": "two-model beat consensus",
+      "bar": 30,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 67960,
+      "method": "two-model beat consensus",
+      "bar": 30,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 68460,
+      "method": "two-model beat consensus",
+      "bar": 31,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 68960,
+      "method": "two-model beat consensus",
+      "bar": 31,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 69470,
+      "method": "two-model beat consensus",
+      "bar": 31,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 69980,
+      "method": "two-model beat consensus",
+      "bar": 31,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 70480,
+      "method": "two-model beat consensus",
+      "bar": 32,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 70980,
+      "method": "two-model beat consensus",
+      "bar": 32,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 71460,
+      "method": "two-model beat consensus",
+      "bar": 32,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 71960,
+      "method": "two-model beat consensus",
+      "bar": 32,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 72450,
+      "method": "two-model beat consensus",
+      "bar": 33,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 72940,
+      "method": "two-model beat consensus",
+      "bar": 33,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 73440,
+      "method": "two-model beat consensus",
+      "bar": 33,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 73940,
+      "method": "two-model beat consensus",
+      "bar": 33,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 74440,
+      "method": "two-model beat consensus",
+      "bar": 34,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 74940,
+      "method": "two-model beat consensus",
+      "bar": 34,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 75420,
+      "method": "two-model beat consensus",
+      "bar": 34,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 75900,
+      "method": "two-model beat consensus",
+      "bar": 34,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 76390,
+      "method": "two-model beat consensus",
+      "bar": 35,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 76880,
+      "method": "two-model beat consensus",
+      "bar": 35,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 77350,
+      "method": "two-model beat consensus",
+      "bar": 35,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 77840,
+      "method": "two-model beat consensus",
+      "bar": 35,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 78310,
+      "method": "two-model beat consensus",
+      "bar": 36,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 78790,
+      "method": "two-model beat consensus",
+      "bar": 36,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 79260,
+      "method": "two-model beat consensus",
+      "bar": 36,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 79740,
+      "method": "two-model beat consensus",
+      "bar": 36,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 80200,
+      "method": "two-model beat consensus",
+      "bar": 37,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 80680,
+      "method": "two-model beat consensus",
+      "bar": 37,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 81130,
+      "method": "two-model beat consensus",
+      "bar": 37,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 81620,
+      "method": "two-model beat consensus",
+      "bar": 37,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 82080,
+      "method": "two-model beat consensus",
+      "bar": 38,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 82540,
+      "method": "two-model beat consensus",
+      "bar": 38,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 83000,
+      "method": "two-model beat consensus",
+      "bar": 38,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 83480,
+      "method": "two-model beat consensus",
+      "bar": 38,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 83920,
+      "method": "two-model beat consensus",
+      "bar": 39,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 84380,
+      "method": "two-model beat consensus",
+      "bar": 39,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 84830,
+      "method": "two-model beat consensus",
+      "bar": 39,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 85280,
+      "method": "two-model beat consensus",
+      "bar": 39,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 85730,
+      "method": "two-model beat consensus",
+      "bar": 40,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 86180,
+      "method": "two-model beat consensus",
+      "bar": 40,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 86620,
+      "method": "two-model beat consensus",
+      "bar": 40,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 87060,
+      "method": "two-model beat consensus",
+      "bar": 40,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 87490,
+      "method": "two-model beat consensus",
+      "bar": 41,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 87940,
+      "method": "two-model beat consensus",
+      "bar": 41,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 88380,
+      "method": "two-model beat consensus",
+      "bar": 41,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 88830,
+      "method": "two-model beat consensus",
+      "bar": 41,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 89260,
+      "method": "two-model beat consensus",
+      "bar": 42,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 89670,
+      "method": "two-model beat consensus",
+      "bar": 42,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 90100,
+      "method": "two-model beat consensus",
+      "bar": 42,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 90520,
+      "method": "two-model beat consensus",
+      "bar": 42,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 90940,
+      "method": "two-model beat consensus",
+      "bar": 43,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 91370,
+      "method": "two-model beat consensus",
+      "bar": 43,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 91780,
+      "method": "two-model beat consensus",
+      "bar": 43,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 92210,
+      "method": "two-model beat consensus",
+      "bar": 43,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 92620,
+      "method": "two-model beat consensus",
+      "bar": 44,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 93050,
+      "method": "two-model beat consensus",
+      "bar": 44,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 93460,
+      "method": "two-model beat consensus",
+      "bar": 44,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 93880,
+      "method": "two-model beat consensus",
+      "bar": 44,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 94300,
+      "method": "two-model beat consensus",
+      "bar": 45,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 94710,
+      "method": "two-model beat consensus",
+      "bar": 45,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 95120,
+      "method": "two-model beat consensus",
+      "bar": 45,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 95520,
+      "method": "two-model beat consensus",
+      "bar": 45,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 95920,
+      "method": "two-model beat consensus",
+      "bar": 46,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 96320,
+      "method": "two-model beat consensus",
+      "bar": 46,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 96710,
+      "method": "two-model beat consensus",
+      "bar": 46,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 97100,
+      "method": "two-model beat consensus",
+      "bar": 46,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 97480,
+      "method": "two-model beat consensus",
+      "bar": 47,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 97860,
+      "method": "two-model beat consensus",
+      "bar": 47,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 98240,
+      "method": "two-model beat consensus",
+      "bar": 47,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 98600,
+      "method": "two-model beat consensus",
+      "bar": 47,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 98980,
+      "method": "two-model beat consensus",
+      "bar": 48,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 99340,
+      "method": "two-model beat consensus",
+      "bar": 48,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 99720,
+      "method": "two-model beat consensus",
+      "bar": 48,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 100100,
+      "method": "two-model beat consensus",
+      "bar": 48,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 100480,
+      "method": "two-model beat consensus",
+      "bar": 49,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 100850,
+      "method": "two-model beat consensus",
+      "bar": 49,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 101220,
+      "method": "two-model beat consensus",
+      "bar": 49,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 101600,
+      "method": "two-model beat consensus",
+      "bar": 49,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 101980,
+      "method": "two-model beat consensus",
+      "bar": 50,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 102360,
+      "method": "two-model beat consensus",
+      "bar": 50,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 102730,
+      "method": "two-model beat consensus",
+      "bar": 50,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 103100,
+      "method": "two-model beat consensus",
+      "bar": 50,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 103480,
+      "method": "two-model beat consensus",
+      "bar": 51,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 103840,
+      "method": "two-model beat consensus",
+      "bar": 51,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 104200,
+      "method": "two-model beat consensus",
+      "bar": 51,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 104580,
+      "method": "two-model beat consensus",
+      "bar": 51,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 104940,
+      "method": "two-model beat consensus",
+      "bar": 52,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 105300,
+      "method": "two-model beat consensus",
+      "bar": 52,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 105660,
+      "method": "two-model beat consensus",
+      "bar": 52,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 106020,
+      "method": "two-model beat consensus",
+      "bar": 52,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 106390,
+      "method": "two-model beat consensus",
+      "bar": 53,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 106740,
+      "method": "two-model beat consensus",
+      "bar": 53,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 107110,
+      "method": "two-model beat consensus",
+      "bar": 53,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 107470,
+      "method": "two-model beat consensus",
+      "bar": 53,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 107820,
+      "method": "two-model beat consensus",
+      "bar": 54,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 108180,
+      "method": "two-model beat consensus",
+      "bar": 54,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 108520,
+      "method": "two-model beat consensus",
+      "bar": 54,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 108880,
+      "method": "two-model beat consensus",
+      "bar": 54,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 109240,
+      "method": "two-model beat consensus",
+      "bar": 55,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 109580,
+      "method": "two-model beat consensus",
+      "bar": 55,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 109940,
+      "method": "two-model beat consensus",
+      "bar": 55,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 110280,
+      "method": "two-model beat consensus",
+      "bar": 55,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 110620,
+      "method": "two-model beat consensus",
+      "bar": 56,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 110980,
+      "method": "two-model beat consensus",
+      "bar": 56,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 111320,
+      "method": "two-model beat consensus",
+      "bar": 56,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 111660,
+      "method": "two-model beat consensus",
+      "bar": 56,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 112000,
+      "method": "two-model beat consensus",
+      "bar": 57,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 112360,
+      "method": "two-model beat consensus",
+      "bar": 57,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 112700,
+      "method": "two-model beat consensus",
+      "bar": 57,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 113060,
+      "method": "two-model beat consensus",
+      "bar": 57,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 113400,
+      "method": "two-model beat consensus",
+      "bar": 58,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 113740,
+      "method": "two-model beat consensus",
+      "bar": 58,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 114080,
+      "method": "two-model beat consensus",
+      "bar": 58,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 114420,
+      "method": "two-model beat consensus",
+      "bar": 58,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 114760,
+      "method": "two-model beat consensus",
+      "bar": 59,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 115100,
+      "method": "two-model beat consensus",
+      "bar": 59,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 115430,
+      "method": "two-model beat consensus",
+      "bar": 59,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 115780,
+      "method": "two-model beat consensus",
+      "bar": 59,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 116100,
+      "method": "two-model beat consensus",
+      "bar": 60,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 116440,
+      "method": "two-model beat consensus",
+      "bar": 60,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 116780,
+      "method": "two-model beat consensus",
+      "bar": 60,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 117100,
+      "method": "two-model beat consensus",
+      "bar": 60,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 117440,
+      "method": "two-model beat consensus",
+      "bar": 61,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 117770,
+      "method": "two-model beat consensus",
+      "bar": 61,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 118120,
+      "method": "two-model beat consensus",
+      "bar": 61,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 118460,
+      "method": "two-model beat consensus",
+      "bar": 61,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 118800,
+      "method": "two-model beat consensus",
+      "bar": 62,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 119130,
+      "method": "two-model beat consensus",
+      "bar": 62,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 119465,
+      "method": "half-tempo midpoint",
+      "bar": 62,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 119800,
+      "method": "two-model beat consensus",
+      "bar": 62,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 120130,
+      "method": "half-tempo midpoint",
+      "bar": 63,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 120460,
+      "method": "two-model beat consensus",
+      "bar": 63,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 120785,
+      "method": "half-tempo midpoint",
+      "bar": 63,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 121110,
+      "method": "two-model beat consensus",
+      "bar": 63,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 121435,
+      "method": "half-tempo midpoint",
+      "bar": 64,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 121760,
+      "method": "two-model beat consensus",
+      "bar": 64,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 122090,
+      "method": "half-tempo midpoint",
+      "bar": 64,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 122420,
+      "method": "two-model beat consensus",
+      "bar": 64,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 122740,
+      "method": "half-tempo midpoint",
+      "bar": 65,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 123060,
+      "method": "two-model beat consensus",
+      "bar": 65,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 123390,
+      "method": "half-tempo midpoint",
+      "bar": 65,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 123720,
+      "method": "two-model beat consensus",
+      "bar": 65,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 124050,
+      "method": "half-tempo midpoint",
+      "bar": 66,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 124380,
+      "method": "two-model beat consensus",
+      "bar": 66,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 124700,
+      "method": "half-tempo midpoint",
+      "bar": 66,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 125020,
+      "method": "two-model beat consensus",
+      "bar": 66,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 125335,
+      "method": "half-tempo midpoint",
+      "bar": 67,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 125650,
+      "method": "two-model beat consensus",
+      "bar": 67,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 125965,
+      "method": "half-tempo midpoint",
+      "bar": 67,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 126280,
+      "method": "two-model beat consensus",
+      "bar": 67,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 126600,
+      "method": "half-tempo midpoint",
+      "bar": 68,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 126920,
+      "method": "two-model beat consensus",
+      "bar": 68,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 127240,
+      "method": "half-tempo midpoint",
+      "bar": 68,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 127560,
+      "method": "two-model beat consensus",
+      "bar": 68,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 127885,
+      "method": "half-tempo midpoint",
+      "bar": 69,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 128210,
+      "method": "two-model beat consensus",
+      "bar": 69,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 128525,
+      "method": "half-tempo midpoint",
+      "bar": 69,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 128840,
+      "method": "two-model beat consensus",
+      "bar": 69,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 129145,
+      "method": "half-tempo midpoint",
+      "bar": 70,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 129450,
+      "method": "two-model beat consensus",
+      "bar": 70,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 129760,
+      "method": "half-tempo midpoint",
+      "bar": 70,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 130070,
+      "method": "two-model beat consensus",
+      "bar": 70,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 130375,
+      "method": "half-tempo midpoint",
+      "bar": 71,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 130680,
+      "method": "two-model beat consensus",
+      "bar": 71,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 130985,
+      "method": "half-tempo midpoint",
+      "bar": 71,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 131290,
+      "method": "two-model beat consensus",
+      "bar": 71,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 131595,
+      "method": "half-tempo midpoint",
+      "bar": 72,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 131900,
+      "method": "two-model beat consensus",
+      "bar": 72,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 132205,
+      "method": "half-tempo midpoint",
+      "bar": 72,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 132510,
+      "method": "two-model beat consensus",
+      "bar": 72,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 132810,
+      "method": "half-tempo midpoint",
+      "bar": 73,
+      "position": 1,
+      "playable": true
+    },
+    {
+      "time_ms": 133110,
+      "method": "two-model beat consensus",
+      "bar": 73,
+      "position": 2,
+      "playable": true
+    },
+    {
+      "time_ms": 133405,
+      "method": "half-tempo midpoint",
+      "bar": 73,
+      "position": 3,
+      "playable": true
+    },
+    {
+      "time_ms": 133700,
+      "method": "two-model beat consensus",
+      "bar": 73,
+      "position": 4,
+      "playable": true
+    },
+    {
+      "time_ms": 134000,
+      "method": "half-tempo midpoint",
+      "bar": 74,
+      "position": 1,
+      "playable": false
+    }
+  ],
+  "coda_accents": [
+    {
+      "id": "coda-1",
+      "time_ms": 135165,
+      "method": "Localized isolated orchestral attack; maximum 40 ms RMS rise, 10 ms window, 5 ms hop; timestamp at frame centre",
+      "review_window_ms": [
+        135100,
+        135230
+      ],
+      "rise": 0.38553
+    },
+    {
+      "id": "coda-2",
+      "time_ms": 136135,
+      "method": "Localized isolated orchestral attack; maximum 40 ms RMS rise, 10 ms window, 5 ms hop; timestamp at frame centre",
+      "review_window_ms": [
+        136050,
+        136200
+      ],
+      "rise": 0.37991
+    },
+    {
+      "id": "coda-3",
+      "time_ms": 139100,
+      "method": "Localized isolated orchestral attack; maximum 40 ms RMS rise, 10 ms window, 5 ms hop; timestamp at frame centre",
+      "review_window_ms": [
+        139020,
+        139170
+      ],
+      "rise": 0.29525
+    },
+    {
+      "id": "coda-4",
+      "time_ms": 140085,
+      "method": "Localized isolated orchestral attack; maximum 40 ms RMS rise, 10 ms window, 5 ms hop; timestamp at frame centre",
+      "review_window_ms": [
+        140000,
+        140160
+      ],
+      "rise": 0.48391
+    },
+    {
+      "id": "coda-5",
+      "time_ms": 143005,
+      "method": "Localized isolated orchestral attack; maximum 40 ms RMS rise, 10 ms window, 5 ms hop; timestamp at frame centre",
+      "review_window_ms": [
+        142900,
+        143060
+      ],
+      "rise": 0.37059
+    },
+    {
+      "id": "coda-6",
+      "time_ms": 143965,
+      "method": "Localized isolated orchestral attack; maximum 40 ms RMS rise, 10 ms window, 5 ms hop; timestamp at frame centre",
+      "review_window_ms": [
+        143880,
+        144030
+      ],
+      "rise": 0.35725
+    },
+    {
+      "id": "coda-7",
+      "time_ms": 144870,
+      "method": "Localized isolated orchestral attack; maximum 40 ms RMS rise, 10 ms window, 5 ms hop; timestamp at frame centre",
+      "review_window_ms": [
+        144780,
+        144940
+      ],
+      "rise": 0.50689
+    },
+    {
+      "id": "coda-8",
+      "time_ms": 149545,
+      "method": "Localized isolated orchestral attack; maximum 40 ms RMS rise, 10 ms window, 5 ms hop; timestamp at frame centre",
+      "review_window_ms": [
+        149460,
+        149620
+      ],
+      "rise": 0.27305
+    }
+  ],
+  "mastering": {
+    "reference_pcm_sha256": "b195064b644b5dee711977fe0f3028b2c53de4f771591287578c016c0b9080b9",
+    "method": "Sample-aligned gain normalization for speaker audibility. All beat/coda timestamps retained; sample count and signal polarity unchanged."
+  }
+}

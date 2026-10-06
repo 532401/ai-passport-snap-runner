@@ -1,0 +1,23 @@
+menu "Snap Runner"
+    config SNAP_BOOT_AUDIO_PROBE
+        bool "Play two diagnostic tones once at boot"
+        default n
+        help
+            Diagnostic builds only: compare blocking output with duplex PCM
+            before starting the game. Uses the demo's codec volume of 80.
+            Disabled in normal firmware; does not alter music or saved settings.
+    config SNAP_DEBUG_TELEMETRY
+        bool "Emit bounded USB debug telemetry"
+        default y
+        help
+            Send @snap JSON observations from a low-priority writer task.
+            No raw audio or inbound commands. Disable for a quiet release build.
+    config SNAP_OUTPUT_DELAY_MS
+        int "Nominal queued speaker latency in milliseconds"
+        range 0 250
+        default 90
+        help
+            Compensates the BSP six-by-240-frame DMA budget at 16 kHz.
+            This is a nominal value; measure the exact board audio/video
+            phase before changing it. It is not hardware latency validation.
+endmenu

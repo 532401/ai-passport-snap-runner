@@ -11,7 +11,14 @@ typedef struct {
     bool clipped;
 } snap_sound_t;
 
+typedef enum {
+    SNAP_DETECT_WARMUP, SNAP_DETECT_QUIET, SNAP_DETECT_THRESHOLD,
+    SNAP_DETECT_COOLDOWN, SNAP_DETECT_WAIT_QUIET, SNAP_DETECT_COLLECTING,
+    SNAP_DETECT_ACCEPTED, SNAP_DETECT_DECAY, SNAP_DETECT_SPECTRUM
+} snap_detect_reason_t;
+
 typedef struct {
+    snap_detect_reason_t reason; /* Observation only; never drives detection. */
     float previous_sample;
     float filtered;
     float noise_power;

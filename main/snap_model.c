@@ -1,9 +1,10 @@
 #include "snap_model.h"
+#include "snap_chart.h"
 
 #include <math.h>
 #include <string.h>
 
-static const float max_run_speed = 125.0f;
+static const float chart_speed = 105.0f;
 
 bool snap_range_valid(snap_range_t range) {
     return isfinite(range.min) && isfinite(range.max) && range.min >= 100.0f &&
@@ -45,57 +46,45 @@ float snap_jump_height(unsigned level) {
     return 18.0f + 8.0f * (float)(level - 1);
 }
 
-static uint32_t next_random(snap_game_t *game) {
-    uint32_t x = game->random;
-    x ^= x << 13;
-    x ^= x >> 17;
-    x ^= x << 5;
-    game->random = x;
-    return x;
-}
-
-static void generate(snap_game_t *game, snap_hazard_t *hazard, float x) {
-    const uint32_t r = next_random(game);
-    hazard->x = x;
-    hazard->kind = (r % 3 == 0) ? SNAP_PIT : SNAP_ROCK;
-    hazard->width = hazard->kind == SNAP_PIT ? 22.0f + (float)(r % 27) :
-                                             12.0f + (float)(r % 9);
-    hazard->height = 12.0f + (float)((r >> 8) % 31);
-    hazard->hit = false;
-}
-
-static float next_gap(snap_game_t *game, float previous_end) {
-    /* Use the gap's world position, so pre-generated hazards follow the same
-     * 1000-m ramp as recycled ones. Never move an already visible hazard. */
-    const float distance = game->distance + previous_end - SNAP_PLAYER_X;
-    const float progress = fminf(1.0f, fmaxf(0.0f, distance / 10000.0f));
-    /* Edge-to-edge safety floor: a full level-10 flight plus 350 ms at the
-     * maximum speed, exceeding the microphone's 180 ms refractory period.
-     * Shorter jumps cannot require more landing time. */
-    const float safe_gap = max_run_speed *
-        (2.0f * sqrtf(2.0f * snap_jump_height(10) / SNAP_GRAVITY) + 0.35f);
-    const float random_gap = (float)(next_random(game) % 75);
-    return safe_gap + 75.0f * (1.0f - progress) +
-           random_gap * (1.0f - (2.0f / 3.0f) * progress);
+/* Place the centre 280 ms after the intended takeoff, so a medium snap
+ * clears either kind. Every position is derived from the song's fixed chart. */
+static void generate(snap_game_t *game, unsigned slot) {
+    snap_hazard_t *h = &game->hazards[slot];
+    const snap_chart_event_t *event = snap_chart_get(game->next_event++);
+    if (!event) {
+        *h = (snap_hazard_t){.x = 1000000, .hit = true};
+        game->hazard_cue_ms[slot] = 0;
+        return;
+    }
+    *h = (snap_hazard_t){
+        .x = SNAP_PLAYER_X + chart_speed *
+             ((float)event->jump_ms + 280.0f - game->song_ms) / 1000.0f - event->width / 2.0f,
+        .width = event->width, .height = event->height,
+        .kind = (snap_hazard_kind_t)event->kind,
+    };
+    game->hazard_cue_ms[slot] = event->jump_ms;
 }
 
 void snap_game_start(snap_game_t *game, uint32_t seed, bool practice) {
     memset(game, 0, sizeof(*game));
-    game->random = seed ? seed : 0x534e4150U;
-    game->speed = 90.0f;
+    game->random = seed; /* Retained as a debug run identity; never generates a map. */
+    game->speed = chart_speed;
     game->lives = 3;
     game->grounded = true;
     game->practice = practice;
-    float x = 330.0f;
-    for (unsigned i = 0; i < SNAP_HAZARD_COUNT; i++) {
-        generate(game, &game->hazards[i], x);
-        const float end = x + game->hazards[i].width;
-        x = end + next_gap(game, end);
+    for (unsigned i = 0; i < SNAP_HAZARD_COUNT; i++) generate(game, i);
+}
+
+int snap_game_cue_in_ms(const snap_game_t *game) {
+    for (unsigned i = 0; i < snap_chart_count(); i++) {
+        const int delta = (int)snap_chart_get(i)->jump_ms - (int)game->song_ms;
+        if (delta >= -150) return delta;
     }
+    return 1000000;
 }
 
 bool snap_game_jump(snap_game_t *game, unsigned level) {
-    if (!game->grounded || game->paused || !game->lives) return false;
+    if (!game->grounded || game->paused || game->complete || !game->lives) return false;
     if (level < 1) level = 1;
     if (level > 10) level = 10;
     game->velocity = sqrtf(2.0f * SNAP_GRAVITY * snap_jump_height(level));
@@ -117,11 +106,12 @@ static void hurt(snap_game_t *game, snap_hazard_t *hazard) {
 }
 
 void snap_game_step(snap_game_t *game) {
-    if (game->paused || !game->lives) return;
+    if (game->paused || game->complete || !game->lives) return;
     const float dt = 0.01f;
-    game->speed = fminf(max_run_speed, 90.0f + game->distance / 1400.0f);
+    game->song_ms += 10;
+    game->speed = chart_speed;
     const float movement = game->speed * dt;
-    game->distance += movement;
+    game->distance = game->song_ms * chart_speed / 1000.0f;
     game->invincible = fmaxf(0.0f, game->invincible - dt);
     game->hurt_flash = fmaxf(0.0f, game->hurt_flash - dt);
     if (!game->grounded) {
@@ -151,12 +141,9 @@ void snap_game_step(snap_game_t *game) {
     }
     for (unsigned i = 0; i < SNAP_HAZARD_COUNT; i++) {
         if (game->hazards[i].x + game->hazards[i].width >= -12.0f) continue;
-        float end = 240.0f;
-        for (unsigned j = 0; j < SNAP_HAZARD_COUNT; j++) {
-            end = fmaxf(end, game->hazards[j].x + game->hazards[j].width);
-        }
-        generate(game, &game->hazards[i], end + next_gap(game, end));
+        generate(game, i);
     }
+    if (game->song_ms >= snap_chart_duration_ms()) game->complete = true;
 }
 
 unsigned snap_game_score(const snap_game_t *game) {

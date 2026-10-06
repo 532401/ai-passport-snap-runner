@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="snap-key" content="__SNAP_KEY__"><title>响指跃行 · 调试工作台</title><link rel="stylesheet" href="/style.css"><script src="/app.js" defer></script></head>
+<body><main>
+<header><div><div class="eyebrow">SNAP RUNNER / LOCAL LAB</div><h1>把每一次跳跃看清楚<span>。</span></h1><p>同一份游戏核心与界面，在电脑上复现，在设备上观察。</p></div><div id="service" class="badge">连接本地工具…</div></header>
+<nav aria-label="调试模式"><button id="simTab" class="active" aria-selected="true">01 桌面模拟</button><button id="deviceTab" aria-selected="false">02 真机数据</button></nav>
+<p id="error" role="alert" hidden></p>
+<section id="simPanel" class="layout">
+<div class="stage card"><div class="section-label">真实 UI · 240 × 320</div><div class="screen"><canvas id="screen" width="240" height="320" aria-label="模拟游戏画面"></canvas></div><div class="keys"><button data-key="0">↑ 上键</button><button data-key="2">确定 ↵</button><button data-key="1">↓ 下键</button></div><p class="note">↑ ↓ Enter 对应设备按键。空格打响指；数字 1–9、0 直接触发对应档位（0 为十档）。</p></div>
+<div class="controls">
+<div class="card"><div class="section-label">输入 / INPUT</div><h2>响指力度 <output id="levelLabel">7</output><small> / 10</small></h2><input id="level" type="range" min="1" max="10" value="7" aria-label="响指力度"><button id="snap" class="primary wide">打响指 <kbd>SPACE</kbd></button><p class="note">直接注入声音事件，验证操作和跳跃。这里不会读取电脑麦克风，也不模拟识别准确率。</p><details><summary>校准与异常输入</summary><label>声音峰值 <input id="peak" type="number" min="0" max="65536" value="10000"></label><div class="row"><label><input type="checkbox" id="clipped"> 削顶</label><label><input type="checkbox" id="noisy"> 环境太吵</label></div><button id="sound">注入原始幅度事件</button><p class="note">校准时每次等屏幕记录后再输入；两段采集之间按确定。</p></details></div>
+<div class="card"><div class="section-label">时间与复现 / REPLAY</div><button id="musicEnable">启用音乐同步</button><audio id="music" preload="metadata" src="/music.wav"></audio><p><a href="/rhythm/" target="_blank" rel="noopener">查看分段速度与强拍试听 ↗</a></p><p class="note" id="musicNote">启用后，音乐播放进度驱动地图；冻结、暂停及退出会停止播放。关闭时可静音单步检查。</p><div class="row"><button id="freeze">冻结模拟</button><button id="step" disabled>单步 10 ms</button><button id="step100" disabled>前进 100 ms</button></div><div class="row seed"><label>运行编号 <input id="seed" type="number" min="0" max="4294967295" value="42"></label><button id="reset">重置运行</button></div><label><input id="calibrated" type="checkbox" checked> 使用模拟校准（Min 1000 / Max 10000）</label><label><input id="overlay" type="checkbox" checked> 显示碰撞范围与间距</label><p class="note">重置回到首页，确定开跑；音乐谱面固定，运行编号不改变路线。取消模拟校准即可测试首次使用。数据仅留在内存。</p></div>
+<div class="card"><div class="section-label">状态 / STATE</div><div id="simMetrics" class="metrics"></div><div id="gapInfo" class="note"></div></div>
+</div><div class="card event-card"><div class="section-label">操作轨迹 / 最近 80 条</div><div id="simEvents" class="events"></div></div>
+</section>
+<section id="devicePanel" hidden>
+<div class="device-head card"><div><div class="section-label">USB · 只读观察</div><h2 id="connection">未连接设备</h2><p id="freshness" class="note">旧版固件没有 @snap 诊断流，需要先刷入新版调试固件。</p></div><button id="demo">查看演示数据</button></div>
+<div id="demoNotice" class="notice" hidden>当前为合成演示数据，不是设备测量。用于检查图表与事件显示。</div>
+<div class="card chart-card"><div class="row"><h2>声音变化</h2><div class="legend"><span class="mint">● 峰值</span><span class="gold">● RMS</span><span class="coral">● 噪声底</span></div></div><canvas id="chart" width="1000" height="230" aria-label="最近三十秒声音幅度曲线"></canvas><p class="note">横轴为设备时间，最多保留约 30 秒；纵轴自动缩放，单位为 PCM 幅度。峰值取每 100 ms 区间内最大值，RMS 为末帧读数。</p></div>
+<div class="card"><div class="section-label">设备当前状态</div><div id="deviceMetrics" class="metrics"></div><p id="quality" class="note"></p></div>
+<div class="card event-card"><div class="section-label">识别与操作 / 最近 80 条</div><div id="deviceEvents" class="events"></div></div>
+<p class="note">启动方式：<code>python tools/snap_debug.py --port 实际串口</code>。本工具不烧录、不发送控制命令、不主动复位；串口不能同时由 monitor 占用。可用 <code>--record build/debug/session.jsonl</code> 保存本次诊断数据，不保存录音。</p>
+</section>
+<footer>桌面验证覆盖界面与规则。真实响指灵敏度、显示时序和性能仍需真机测试。</footer>
+</main></body></html>

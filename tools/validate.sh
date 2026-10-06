@@ -71,10 +71,13 @@ run_static_checks() {
     PYTHONDONTWRITEBYTECODE=1 python3 tests/test_archive_firmware.py
     PYTHONDONTWRITEBYTECODE=1 python3 tests/test_install_passport_skills.py
     "${CC:-cc}" -std=c11 -Wall -Wextra -Werror -Imain \
-        tests/test_snap.c main/snap_model.c main/snap_detector.c main/snap_session.c \
+        tests/test_snap.c main/snap_model.c main/snap_detector.c main/snap_session.c main/snap_chart.c main/snap_music.c \
         -lm -o "${test_dir}/test_snap"
     "${test_dir}/test_snap"
+    PYTHONDONTWRITEBYTECODE=1 python3 tests/test_snap_debug.py
     python3 tools/snap_fonts.py --check
+    python3 tools/snap_music_chart.py --check
+    PYTHONDONTWRITEBYTECODE=1 python3 tests/test_snap_music_chart.py
     rm -rf "${test_dir}"
     echo "Host tests: PASS"
 }

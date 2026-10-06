@@ -25,6 +25,19 @@ static int fail_codec_delete;
 static bool tx_data_enabled, rx_data_enabled;
 static unsigned codec_creations, codec_starts, ctrl_creations, ctrl_deletions;
 static bool read_reg0e_reserved_zero;
+static size_t queued_input;
+static int read_error;
+static int fail_read_reg = -1;
+esp_err_t i2s_channel_read(i2s_chan_handle_t channel, void *data, size_t bytes,
+                           size_t *received, unsigned timeout) {
+    (void)data;
+    assert(channel == &rx_channel && timeout == 0);
+    *received = 0;
+    if (read_error) return read_error;
+    *received = queued_input < bytes ? queued_input : bytes;
+    queued_input -= *received;
+    return *received < bytes ? ESP_ERR_TIMEOUT : ESP_OK;
+}
 
 static int reg_write(const audio_codec_ctrl_if_t *ctrl, int reg, int reg_len,
                      void *value, int size) {
@@ -43,6 +56,7 @@ static int reg_read(const audio_codec_ctrl_if_t *ctrl, int reg, int reg_len,
                     void *value, int size) {
     (void)ctrl;
     assert(reg_len == 1 && size == 1);
+    if (reg == fail_read_reg) return ESP_FAIL;
     *(uint8_t *)value = registers[reg];
     if (reg == 0x0e && read_reg0e_reserved_zero) *(uint8_t *)value &= 0x7f;
     return ESP_OK;
@@ -264,6 +278,7 @@ static void assert_rollback(void) {
     assert(!tx_channel.running && !rx_channel.running);
     assert(!tx_data_enabled && !rx_data_enabled);
     assert(bsp_audio_read(pcm, sizeof(pcm)) == ESP_ERR_INVALID_STATE);
+    assert(bsp_audio_discard_input() == ESP_ERR_INVALID_STATE);
     assert(bsp_audio_write(pcm, sizeof(pcm)) == ESP_ERR_INVALID_STATE);
 }
 static void assert_active(void) {
@@ -277,6 +292,26 @@ int main(void) {
     bsp_audio_set_volume(43);
     assert(bsp_audio_set_format(16000, 16, 1) == ESP_OK);
     assert_active();
+    bsp_audio_output_status_t output_status = {0};
+    assert(bsp_audio_get_output_status(NULL) == ESP_ERR_INVALID_ARG);
+    registers[0x31] = 0x60;
+    assert(bsp_audio_get_output_status(&output_status) == ESP_OK);
+    assert(output_status.mute == 0x60 && output_status.volume == 43);
+    assert(output_status.power == 0x02 && output_status.clock == registers[0x01]);
+    bsp_audio_output_status_t previous_status = output_status;
+    fail_read_reg = 0x32;
+    assert(bsp_audio_get_output_status(&output_status) == ESP_FAIL);
+    assert(memcmp(&output_status, &previous_status, sizeof(output_status)) == 0);
+    fail_read_reg = -1;
+    queued_input = 2881;
+    assert(bsp_audio_discard_input() == ESP_OK && queued_input == 0);
+    assert(bsp_audio_discard_input() == ESP_OK);
+    read_error = ESP_FAIL;
+    assert(bsp_audio_discard_input() == ESP_FAIL);
+    read_error = 0;
+    queued_input = 20000;
+    assert(bsp_audio_discard_input() == ESP_ERR_TIMEOUT && queued_input > 0);
+    queued_input = 0;
     unsigned created = codec_creations;
     assert(bsp_audio_set_format(16000, 16, 1) == ESP_OK);
     assert(codec_creations == created); // Same-format reuse remains cheap.
@@ -284,6 +319,7 @@ int main(void) {
     assert(tx_channel.hz == 8000 && rx_channel.hz == 8000);
     read_reg0e_reserved_zero = true;
     assert(bsp_audio_sleep() == ESP_OK);
+    assert(bsp_audio_get_output_status(&output_status) == ESP_ERR_INVALID_STATE);
     assert(registers[0x45] == 0x01); // Nothing writes weaker suspend after force-sleep.
     created = codec_creations;
     unsigned controls = ctrl_creations, deleted = ctrl_deletions;

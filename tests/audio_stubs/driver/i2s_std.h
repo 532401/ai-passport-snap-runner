@@ -1,5 +1,6 @@
 #pragma once
 #include <stdbool.h>
+#include <stddef.h>
 #include "esp_err.h"
 typedef struct test_channel *i2s_chan_handle_t;
 typedef struct {
@@ -31,3 +32,4 @@ esp_err_t i2s_channel_init_std_mode(i2s_chan_handle_t, const i2s_std_config_t *)
 esp_err_t i2s_channel_enable(i2s_chan_handle_t);
 esp_err_t i2s_channel_disable(i2s_chan_handle_t);
 esp_err_t i2s_del_channel(i2s_chan_handle_t);
+esp_err_t i2s_channel_read(i2s_chan_handle_t, void *, size_t, size_t *, unsigned);

@@ -1,6 +1,8 @@
 #include "snap_detector.h"
 #include "snap_model.h"
 #include "snap_session.h"
+#include "snap_chart.h"
+#include "snap_music.h"
 
 #include <assert.h>
 #include <math.h>
@@ -84,112 +86,120 @@ static void collision_test(void) {
     assert(memcmp(&game, &paused, sizeof(game)) == 0);
 }
 
-/* Force one off-screen slot to recycle; measure the public model's new gap. */
-static float generated_gap(unsigned seed, float distance) {
-    snap_game_t game;
-    snap_game_start(&game, seed, false);
-    game.distance = distance;
-    for (unsigned i = 0; i < SNAP_HAZARD_COUNT; i++)
-        game.hazards[i] = (snap_hazard_t){300 + 100 * i, 20, 12, SNAP_ROCK, false};
-    game.hazards[0].x = -100;
-    snap_game_step(&game);
-    const snap_hazard_t *previous = &game.hazards[SNAP_HAZARD_COUNT - 1];
-    return game.hazards[0].x - previous->x - previous->width;
-}
-
-static void density_test(void) {
-    const float safe_gap = 125 * (2 * sqrtf(2 * 90.0f / 800) + 0.35f);
-    for (unsigned seed = 1; seed <= 120; seed++) {
-        float previous = generated_gap(seed, 0);
-        const float initial = previous;
-        for (unsigned stage = 1; stage <= 4; stage++) {
-            const float gap = generated_gap(seed, stage * 2500.0f);
-            assert(gap < previous); /* Same random choice, increasing density. */
-            assert(gap >= safe_gap - 0.01f);
-            previous = gap;
-        }
-        assert(initial - previous > 60);
-        assert(previous <= safe_gap + 25);
-        assert(fabsf(generated_gap(seed, 60000) - previous) < 0.01f);
-    }
-}
-
-static bool jump_near_hazard(snap_game_t *game, float timing_offset) {
-    const snap_hazard_t *next = NULL;
-    for (unsigned j = 0; j < SNAP_HAZARD_COUNT; j++) {
-        const snap_hazard_t *h = &game->hazards[j];
-        if (h->x + h->width < SNAP_PLAYER_X || h->hit) continue;
-        if (!next || h->x < next->x) next = h;
-    }
-    if (!next || !game->grounded) return false;
-    const float half_flight = sqrtf(2.0f * snap_jump_height(10) / SNAP_GRAVITY);
-    const float to_centre = next->x + next->width / 2 - SNAP_PLAYER_X;
-    if (to_centre > game->speed * (half_flight + timing_offset)) return false;
-    assert(snap_game_jump(game, 10));
-    return true;
-}
-
-/* Exercise all ordered kind/width extremes at the absolute spacing floor,
- * including maximum-height rocks and opposite timing errors on each jump. */
-static void minimum_gap_test(void) {
-    const float gap = 125 * (2 * sqrtf(2 * 90.0f / 800) + 0.35f);
-    for (unsigned kinds = 0; kinds < 4; kinds++) {
-        for (unsigned sizes = 0; sizes < 4; sizes++) {
-            for (unsigned speed = 0; speed < 3; speed++) {
-                for (int error = -1; error <= 1; error++) {
-                    snap_game_t game;
-                    snap_game_start(&game, 1, false);
-                    const float starts[] = {0, 24500, 60000};
-                    game.distance = starts[speed];
-                    float x = 330;
-                    for (unsigned i = 0; i < SNAP_HAZARD_COUNT; i++) {
-                        const bool pit = ((kinds >> i) & 1) != 0;
-                        const bool wide = ((sizes >> i) & 1) != 0;
-                        const float width = pit ? (wide ? 48 : 22) : (wide ? 20 : 12);
-                        game.hazards[i] = (snap_hazard_t){x, width, 42,
-                            pit ? SNAP_PIT : SNAP_ROCK, false};
-                        x += width + (i == 0 ? gap : 3000);
-                    }
-                    unsigned jumps = 0, grounded_steps = 0, frame = 0;
-                    for (; frame < 1200; frame++) {
-                        if (jumps == 1 && game.grounded) grounded_steps++;
-                        if (jump_near_hazard(&game, (jumps ? -error : error) * 0.08f))
-                            jumps++;
-                        snap_game_step(&game);
-                        assert(game.lives == 3);
-                        if (jumps == 2 && game.grounded) break;
-                    }
-                    assert(frame < 1200 && jumps == 2);
-                    assert(grounded_steps >= 18); /* At least 180 ms on ground. */
-                    assert(game.hazards[1].x + game.hazards[1].width <
-                           SNAP_PLAYER_X - SNAP_PLAYER_HALF_W);
-                }
-            }
-        }
-    }
-}
-
-/* Jump near the clearance-window centre with +/-80 ms timing variation.
- * Exercise generated streams through the density ramp and at maximum speed. */
+/* Every chart event must be survivable at the advertised medium force,
+ * even with opposite early/late errors. Also prove that maximum jumps land
+ * before the next cue, and never use invincibility to hide an unsafe chart. */
 static void map_test(void) {
-    for (unsigned seed = 1; seed <= 120; seed++) {
-        snap_game_t game;
-        snap_game_start(&game, seed, false);
-        const float starts[] = {0, 4000, 9000, 60000};
-        game.distance = starts[seed % 4];
-        unsigned jumps = 0;
-        for (unsigned frame = 0; frame < 12000; frame++) {
-            const float timing_offset = ((int)(jumps % 3) - 1) * 0.08f;
-            if (jump_near_hazard(&game, timing_offset)) jumps++;
+    assert(snap_chart_count() >= 30);
+    for (unsigned i = 1; i < snap_chart_count(); i++)
+        assert(snap_chart_get(i)->jump_ms - snap_chart_get(i - 1)->jump_ms >= 2500);
+    for (unsigned level = 3; level <= 10; level++) {
+        for (int error = -80; error <= 80; error += 80) {
+            snap_game_t game;
+            snap_game_start(&game, 42, false);
+            unsigned next = 0;
+            for (unsigned frame = 0; frame < 16000 && !game.complete; frame++) {
+                if (next < snap_chart_count()) {
+                    int target = (int)snap_chart_get(next)->jump_ms +
+                                 (next % 2 ? -error : error);
+                    if ((int)game.song_ms >= target) {
+                        assert(game.grounded);
+                        assert(snap_game_jump(&game, level));
+                        next++;
+                    }
+                }
+                snap_game_step(&game);
+                assert(game.lives == 3 && game.invincible == 0);
+            }
+            assert(game.complete && next == snap_chart_count());
+            const snap_game_t complete = game;
             snap_game_step(&game);
-            assert(game.lives == 3);
+            assert(memcmp(&game, &complete, sizeof(game)) == 0);
         }
-        assert(jumps > 30);
     }
     snap_game_t a, b;
     snap_game_start(&a, 42, false);
-    snap_game_start(&b, 42, false);
-    assert(memcmp(&a, &b, sizeof(a)) == 0);
+    snap_game_start(&b, 987, false);
+    assert(memcmp(a.hazards, b.hazards, sizeof(a.hazards)) == 0);
+    /* No snaps still loses exactly three lives; music does not auto-jump. */
+    for (unsigned i = 0; i < 6000 && a.lives; i++) snap_game_step(&a);
+    assert(a.lives == 0 && !a.complete);
+}
+
+static void transport_test(void) {
+    assert(snap_music_codec_volume(0) == 0);
+    assert(snap_music_codec_volume(50) == 100);
+    assert(snap_music_codec_volume(1000) == 100);
+    unsigned previous = 0;
+    for (unsigned volume = 1; volume <= 50; volume++) {
+        const unsigned codec = snap_music_codec_volume(volume);
+        assert(codec >= previous && codec <= 100);
+        /* The real codec curve must reproduce browser amplitude within its
+         * 0.5 dB register step, including the default and quiet settings. */
+        const float actual = powf(10.0f, (-50.0f + codec * 0.5f) / 20.0f);
+        assert(fabsf(actual / (volume / 50.0f) - 1.0f) < 0.03f);
+        previous = codec;
+    }
+    uint8_t data[32000];
+    for (unsigned i = 0; i < sizeof(data); i++) data[i] = (uint8_t)i;
+    snap_music_t m;
+    snap_music_init(&m, data, sizeof(data), 90);
+    snap_music_request_t r = {.generation = 1, .playing = true, .volume = 30};
+    snap_music_request(&m, r);
+    int16_t frame[SNAP_FRAME_SAMPLES];
+    for (unsigned i = 0; i < 18; i++) {
+        snap_music_frame(&m, frame);
+        assert(frame[0] == 0 && snap_music_position_ms(&m) == 0);
+        snap_music_commit(&m, true);
+    }
+    snap_music_frame(&m, frame);
+    assert(frame[0] == 256);
+    for (unsigned i = 0; i < 40; i++) snap_music_commit(&m, true);
+    assert(snap_music_position_ms(&m) == 110);
+    r.playing = false; r.seek_ms = 110;
+    snap_music_request(&m, r);
+    for (unsigned i = 0; i < 100; i++) {
+        snap_music_frame(&m, frame);
+        assert(frame[0] == 0);
+        snap_music_commit(&m, true);
+        assert(snap_music_position_ms(&m) == 110);
+    }
+    r.playing = true; snap_music_request(&m, r);
+    for (unsigned i = 0; i < 18; i++) snap_music_commit(&m, true);
+    snap_music_frame(&m, frame);
+    const unsigned offset = 110 * 16 * 2;
+    assert((uint16_t)frame[0] == (unsigned)(data[offset] | data[offset + 1] << 8));
+    snap_music_commit(&m, false);
+    assert(m.failed && snap_music_position_ms(&m) == 110);
+    snap_music_frame(&m, frame); assert(frame[0] == 0);
+    r.generation++; r.seek_ms = 0; snap_music_request(&m, r);
+    assert(!m.failed && snap_music_position_ms(&m) == 0);
+    for (unsigned i = 0; i < 300; i++) snap_music_commit(&m, true);
+    assert(snap_music_position_ms(&m) == 1000);
+    snap_music_frame(&m, frame); assert(frame[0] == 0);
+
+    snap_session_t s;
+    snap_session_init(&s, (snap_range_t){1000,10000}, 0, 1);
+    snap_session_mic(&s, true, 0);
+    snap_session_key(&s, SNAP_KEY_OK, 1000);
+    assert(snap_session_sync_music(&s, 100));
+    assert(s.game.song_ms == 100);
+    assert(!snap_session_sync_music(&s, 90));
+    assert(!snap_session_sync_music(&s, 1000));
+    assert(s.game.song_ms == 100);
+    snap_session_key(&s, SNAP_KEY_OK, 1100);
+    assert(snap_session_sync_music(&s, 200));
+    assert(s.game.song_ms == 100); /* Paused audio clock cannot advance the world. */
+    snap_session_key(&s, SNAP_KEY_OK, 1200);
+    for (unsigned i = 0; i < 30; i++) snap_session_key(&s, SNAP_KEY_UP, 1300);
+    assert(s.volume == 50 && s.page == SNAP_PLAYING);
+    for (unsigned i = 0; i < 30; i++) snap_session_key(&s, SNAP_KEY_DOWN, 1300);
+    assert(s.volume == 0 && s.page == SNAP_PLAYING);
+    s.game.song_ms = snap_chart_duration_ms() / 10 * 10;
+    for (unsigned i = 0; i < SNAP_HAZARD_COUNT; i++) s.game.hazards[i].hit = true;
+    assert(snap_session_sync_music(&s, snap_chart_duration_ms()));
+    assert(s.page == SNAP_OVER && s.game.complete && s.save_pending);
+    assert(s.high_score == snap_game_score(&s.game));
 }
 
 static unsigned silence(snap_detector_t *d, unsigned frames) {
@@ -244,6 +254,40 @@ static void detector_test(void) {
     assert(d.rms < 1); /* DC rejection. */
 }
 
+/* Use the shipped soundtrack as a linear speaker-leakage fixture. This
+ * validates the frequency split, not the board's nonlinear acoustic path. */
+static void music_leakage_test(void) {
+    for (unsigned inject = 0; inject < 2; inject++) {
+        FILE *file = fopen("assets/music/mountain-king.pcm", "rb");
+        assert(file);
+        snap_mic_filter_t filter = {0};
+        snap_detector_t detector;
+        snap_detector_init(&detector);
+        unsigned events = 0, pulses = 0, frame = 0;
+        uint8_t bytes[SNAP_FRAME_SAMPLES * 2];
+        while (fread(bytes, 1, sizeof(bytes), file) == sizeof(bytes)) {
+            int16_t pcm[SNAP_FRAME_SAMPLES];
+            const bool hit = inject && frame > 200 && frame % 600 == 0;
+            if (hit) pulses++;
+            for (unsigned i = 0; i < SNAP_FRAME_SAMPLES; i++) {
+                unsigned u = bytes[2 * i] | (unsigned)bytes[2 * i + 1] << 8;
+                float value = u < 32768 ? (float)u : (float)((int)u - 65536);
+                if (hit) value += 6000 * expf(-(float)i / 18) * (i % 2 ? -1 : 1);
+                pcm[i] = (int16_t)fmaxf(-32768, fminf(32767, value));
+            }
+            snap_mic_filter(&filter, pcm);
+            snap_sound_t sound;
+            events += snap_detector_process(&detector, pcm, &sound);
+            frame++;
+        }
+        fclose(file);
+        printf("Music leakage fixture: injected=%u detected=%u\n", pulses, events);
+        /* At least 95% recall on this linear mixed fixture; zero events when
+         * music plays alone. Human/room accuracy is a separate device check. */
+        assert(inject ? events <= pulses && events * 100 >= pulses * 95 : events == 0);
+    }
+}
+
 static void session_test(void) {
     snap_session_t s;
     snap_session_init(&s, (snap_range_t){0}, 123, 1);
@@ -288,6 +332,7 @@ static void session_test(void) {
     snap_session_key(&s, SNAP_KEY_OK, 14000);
     assert(s.page == SNAP_PLAYING);
     s.game.distance = 2500;
+    s.game.song_ms = 23810;
     s.game.lives = 1;
     s.game.grounded = true;
     s.game.y = 0;
@@ -309,11 +354,11 @@ int main(void) {
     calibration_test();
     jump_test();
     collision_test();
-    density_test();
-    minimum_gap_test();
+    transport_test();
     map_test();
     detector_test();
+    music_leakage_test();
     session_test();
-    puts("Snap: calibration, detector, physics, 120 map seeds, lifecycle PASS");
+    puts("Snap: calibration, detector, fixed beat chart, timing margin, audio transport, lifecycle PASS");
     return 0;
 }

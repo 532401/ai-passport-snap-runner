@@ -104,6 +104,18 @@ int main(int argc, char **argv) {
     lv_refr_now(display);
     save(argv[1], "errors");
     status.storage_ok = status.buttons_ok = true;
+    status.music_fault = true;
+    snap_ui_update(&session, &status);
+    lv_refr_now(display);
+    validate_layout(lv_screen_active());
+    save(argv[1], "music-error");
+    status.music_fault = false;
+    session.page = SNAP_OVER;
+    session.game.complete = true;
+    snap_ui_update(&session, &status);
+    lv_refr_now(display);
+    validate_layout(lv_screen_active());
+    save(argv[1], "complete");
     session.page = SNAP_PLAYING;
     snap_game_start(&session.game, 5, true);
     for (unsigned i = 0; i < 300; i++) {

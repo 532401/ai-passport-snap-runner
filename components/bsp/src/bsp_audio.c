@@ -564,7 +564,36 @@ esp_err_t bsp_audio_read(void *pcm, size_t bytes) {
     return esp_codec_dev_read(s_dev, pcm, bytes) == 0 ? ESP_OK : ESP_FAIL;
 }
 
+esp_err_t bsp_audio_discard_input(void) {
+    if (!s_dev || !s_opened || s_sleeping || !s_rx) return ESP_ERR_INVALID_STATE;
+    uint8_t scratch[240];
+    /* Six descriptors plus the driver's partial buffer, at up to stereo/32-bit.
+     * A bound prevents a continuously producing source from extending this call. */
+    for (unsigned i = 0; i < 7 * 8; i++) {
+        size_t received = 0;
+        const esp_err_t result = i2s_channel_read(s_rx, scratch, sizeof(scratch), &received, 0);
+        if (result == ESP_ERR_TIMEOUT || (result == ESP_OK && received == 0)) return ESP_OK;
+        if (result != ESP_OK) return result;
+    }
+    return ESP_ERR_TIMEOUT;
+}
+
 void bsp_audio_set_volume(uint8_t percent) {
     s_volume = percent > 100 ? 100 : percent;
     if (s_dev && s_opened && !s_sleeping) esp_codec_dev_set_out_vol(s_dev, s_volume);
+}
+
+esp_err_t bsp_audio_get_output_status(bsp_audio_output_status_t *status) {
+    if (!status) return ESP_ERR_INVALID_ARG;
+    if (!s_ctrl || !s_opened || s_sleeping) return ESP_ERR_INVALID_STATE;
+    bsp_audio_output_status_t actual;
+    const uint8_t regs[] = {0x01, 0x09, 0x0e, 0x12, 0x31, 0x32, 0x44};
+    uint8_t *values[] = {&actual.clock, &actual.dac_interface, &actual.power,
+                        &actual.dac_power, &actual.mute, &actual.volume, &actual.route};
+    for (unsigned i = 0; i < sizeof(regs); i++) {
+        if (s_ctrl->read_reg(s_ctrl, regs[i], 1, values[i], 1) != ESP_CODEC_DEV_OK)
+            return ESP_FAIL;
+    }
+    *status = actual;
+    return ESP_OK;
 }
